@@ -1,16 +1,20 @@
-print("Iniciando conexión a la base de datos maker.db...")
 import sqlite3
 
-def conexion():
-    try:
-        conexion = sqlite3.connect('maker.db')
-        print("Conexión exitosa a maker.db")
-        return conexion
-    except sqlite3.Error as e:
-        print("Error al conectar a maker.db: {e}")
-        return None
+def conectar():
+    """Crea y devuelve una conexión a la base de datos maker.db"""
+    conexion = sqlite3.connect("maker.db")
+    conexion.execute("PRAGMA foreign_keys = ON")
+    return conexion
 
-    if __name__ == "__main__":
-        conexion=conexion()
-        if conexion:
-            conexion.close()
+if __name__ == "__main__":
+    conexion = conectar()
+    cursor = conexion.cursor()
+
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+    tablas = cursor.fetchall()
+    print("Tablas encontradas:", tablas)
+
+    conexion.close()
+
+
+        
