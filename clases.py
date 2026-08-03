@@ -1,8 +1,16 @@
+# ==========================
+# CLASE PERSONA
+# ==========================
+
 class Persona:
     def __init__(self, identificacion, nombre):
         self.identificacion = identificacion
         self.nombre = nombre
 
+
+# ==========================
+# CLASE USUARIO (HEREDA DE PERSONA)
+# ==========================
 
 class Usuario(Persona):
     def __init__(self, identificacion, nombre, correo, telefono):
@@ -11,11 +19,17 @@ class Usuario(Persona):
         self.telefono = telefono
 
     def mostrar(self):
-        print(f"ID: {self.identificacion}")
-        print(f"Nombre: {self.nombre}")
-        print(f"Correo: {self.correo}")
-        print(f"Teléfono: {self.telefono}")
+        return (
+            f"ID: {self.identificacion}\n"
+            f"Nombre: {self.nombre}\n"
+            f"Correo: {self.correo}\n"
+            f"Teléfono: {self.telefono}"
+        )
 
+
+# ==========================
+# CLASE LIBRO
+# ==========================
 
 class Libro:
     def __init__(self, codigo, titulo, autor, categoria, cantidad):
@@ -26,12 +40,18 @@ class Libro:
         self.cantidad = cantidad
 
     def mostrar(self):
-        print(f"Código: {self.codigo}")
-        print(f"Título: {self.titulo}")
-        print(f"Autor: {self.autor}")
-        print(f"Categoría: {self.categoria}")
-        print(f"Cantidad disponible: {self.cantidad}")
+        return (
+            f"Código: {self.codigo}\n"
+            f"Título: {self.titulo}\n"
+            f"Autor: {self.autor}\n"
+            f"Categoría: {self.categoria}\n"
+            f"Cantidad disponible: {self.cantidad}"
+        )
 
+
+# ==========================
+# CLASE PRESTAMO
+# ==========================
 
 class Prestamo:
     def __init__(self, usuario, libro, fecha_prestamo, fecha_devolucion, devuelto=False):
@@ -42,8 +62,12 @@ class Prestamo:
         self.devuelto = devuelto
 
     def mostrar(self):
-        print(f"Usuario: {self.usuario}")
-        print(f"Libro: {self.libro}")
-        print(f"Fecha préstamo: {self.fecha_prestamo}")
-        print(f"Fecha devolución: {self.fecha_devolucion}")
-        print(f"Devuelto: {'Sí' if self.devuelto else 'No'}")
+        estado = "Sí" if self.devuelto else "No"
+
+        return (
+            f"Usuario: {self.usuario}\n"
+            f"Libro: {self.libro}\n"
+            f"Fecha préstamo: {self.fecha_prestamo}\n"
+            f"Fecha devolución: {self.fecha_devolucion}\n"
+            f"Devuelto: {estado}"
+        )
