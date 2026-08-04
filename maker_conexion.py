@@ -1,5 +1,4 @@
 import sqlite3
-
 def conectar():
     """Conecta a la base de datos maker.db"""
     try:
