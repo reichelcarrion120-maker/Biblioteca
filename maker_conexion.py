@@ -1,10 +1,8 @@
 import os
 import sqlite3
 
-# 1. Obtenemos la ruta exacta de la carpeta donde vive este archivo (Biblioteca)
 DIRECTORIO_ACTUAL = os.path.dirname(os.path.abspath(__file__))
 
-# 2. Forzamos a que maker.db SIEMPRE se cree y lea en esta misma carpeta
 RUTA_BD = os.path.join(DIRECTORIO_ACTUAL, "maker.db")
 
 
