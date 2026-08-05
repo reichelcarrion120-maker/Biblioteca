@@ -1,10 +1,10 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import sqlite3
 from maker_conexion import conectar
 
 
 def registrar_prestamo():
-    """Punto 9: Seleccionar usuario, libro, registrar fechas y disminuir stock"""
+    """Punto 9: Pide manualmente tanto la fecha de préstamo como la de devolución"""
     print("\n--- REGISTRAR PRÉSTAMO ---")
 
     conexion = conectar()
@@ -58,26 +58,37 @@ def registrar_prestamo():
             print("Error: No hay ejemplares disponibles de este libro.")
             return
 
-        # 3 y 4. Registrar fecha de préstamo y devolución
-        fecha_input = input(
-            "Fecha de préstamo (AAAA-MM-DD) [Presione Enter para usar la fecha de hoy]: "
-        ).strip()
+        # 3. Pedir Fecha de Préstamo
+        while True:
+            fecha_input = input(
+                "Fecha de préstamo (AAAA-MM-DD) [Enter para hoy]: "
+            ).strip()
+            if not fecha_input:
+                fecha_prestamo_str = datetime.today().strftime("%Y-%m-%d")
+                break
+            else:
+                try:
+                    datetime.strptime(fecha_input, "%Y-%m-%d")
+                    fecha_prestamo_str = fecha_input
+                    break
+                except ValueError:
+                    print(
+                        "Error: Formato incorrecto. Use AAAA-MM-DD (ej. 2026-08-05)."
+                    )
 
-        if not fecha_input:
-            fecha_prestamo = datetime.today()
-        else:
+        # 4. Pedir Fecha de Devolución Manualmente
+        while True:
+            fecha_dev_input = input(
+                "Fecha de devolución (AAAA-MM-DD): "
+            ).strip()
             try:
-                fecha_prestamo = datetime.strptime(fecha_input, "%Y-%m-%d")
+                datetime.strptime(fecha_dev_input, "%Y-%m-%d")
+                fecha_devolucion_str = fecha_dev_input
+                break
             except ValueError:
                 print(
-                    "Error: Formato de fecha incorrecto. Debe ser AAAA-MM-DD."
+                    "Error: Formato incorrecto. Use AAAA-MM-DD (ej. 2026-08-12)."
                 )
-                return
-
-        # Fecha de devolución automática a 7 días
-        fecha_devolucion = fecha_prestamo + timedelta(days=7)
-        fecha_prestamo_str = fecha_prestamo.strftime("%Y-%m-%d")
-        fecha_devolucion_str = fecha_devolucion.strftime("%Y-%m-%d")
 
         # Insertar préstamo
         cursor.execute(
@@ -100,7 +111,7 @@ def registrar_prestamo():
         print(f"Usuario: {nombre_usuario}")
         print(f"Libro: {titulo_libro}")
         print(f"Fecha de préstamo: {fecha_prestamo_str}")
-        print(f"Fecha límite de devolución: {fecha_devolucion_str}")
+        print(f"Fecha de devolución: {fecha_devolucion_str}")
 
     except Exception as e:
         print("Ocurrió un error al registrar el préstamo:", e)
